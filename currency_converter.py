@@ -1,6 +1,10 @@
+import os
 from requests import get
+from dotenv import load_dotenv
 
-API_KEY = "fca_live_kHC29x5KWJmI4PjoHfJ2ZfLxfxpdgduS3OQPTgwl"
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 BASE_URL = "https://api.freecurrencyapi.com/v1/"
 
 
@@ -49,6 +53,3 @@ while True:
         print("Bye!")
         break
     fetch_data("%2C".join(currencies_to_check))
-
-# https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_kHC29x5KWJmI4PjoHfJ2ZfLxfxpdgduS3OQPTgwl&currencies=EUR%2CUSD%2CCAD
-# https://api.freecurrencyapi.com/v1/status?apikey=fca_live_kHC29x5KWJmI4PjoHfJ2ZfLxfxpdgduS3OQPTgwl
