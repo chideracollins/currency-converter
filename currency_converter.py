@@ -1,25 +1,40 @@
-import requests
+from requests import get
 
 API_KEY = "fca_live_kHC29x5KWJmI4PjoHfJ2ZfLxfxpdgduS3OQPTgwl"
-BASE_URL = f"https://api.freecurrencyapi.com/v1/"
+BASE_URL = "https://api.freecurrencyapi.com/v1/"
 
 
 def make_request(url):
-    response = requests.get(url)
-    return response.json()
+    try:
+        response = get(url)
+        return response.json()
+    except:
+        print(
+            "You need an internet connection to access the website!\nRetry after you establish one."
+        )
+        quit()
 
 
 def fetch_data(currencies):
-    latest_url = f"{BASE_URL}latest?apikey={API_KEY}&currencies={currencies}"
+    latest_url = f"{BASE_URL}latest?apikey={API_KEY}&currencies"
     status_url = f"{BASE_URL}status?apikey={API_KEY}"
-    data = make_request(latest_url)["data"]
+    try:
+        data = make_request(f"{latest_url}={currencies}")["data"]
+    except:
+        valid_curr_abbr = list(make_request(latest_url)["data"].keys())
+        print("Invalid currency abbreviation!")
+        print(
+            f"Here is a list of valid currencies abbreviation that can be checked -> {valid_curr_abbr}"
+        )
+        return
+    status = make_request(status_url)
     total__avail_req, remaining_req = (
-        make_request(status_url)["quotas"]["month"]["total"],
-        make_request(status_url)["quotas"]["month"]["remaining"],
+        status["quotas"]["month"]["total"],
+        status["quotas"]["month"]["remaining"],
     )
     print(f"Here is the data -> {data}")
     print(
-        f"NB: You have {remaining_req} remaining requests out of, {total__avail_req} total free requests."
+        f"NB: You have {remaining_req} remaining requests out of, {total__avail_req} total free requests for the month."
     )
 
 
@@ -27,7 +42,7 @@ while True:
     currencies_to_check = [
         word.upper()
         for word in input(
-            "Enter the currencies you would want to see in their code or 'q' to quit: "
+            "Enter the currencies abbreviation you would want to see, leaving a space after each or 'q' to quit: "
         ).split()
     ]
     if currencies_to_check[0] == "Q":
