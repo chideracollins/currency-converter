@@ -1,2 +1,15 @@
+# File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
+# Created by https://www.toptal.com/developers/gitignore/api/dotenv,python,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=dotenv,python,visualstudiocode
+
+### dotenv ###
 .env
-.vscode/
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
