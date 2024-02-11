@@ -6,5 +6,5 @@
 .env
 
 ### VisualStudioCode ###
-/.vscode
+.vscode/
 
